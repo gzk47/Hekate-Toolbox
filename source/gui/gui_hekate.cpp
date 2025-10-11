@@ -239,7 +239,7 @@ void GuiHekate::draw() {
         if (restrictedMode)
         {
             Gui::drawTextAligned(font24, Gui::g_framebuffer_width / 2, 150, currTheme.activatedColor, "限制模式", ALIGNED_CENTER);
-            Gui::drawTextAligned(font20, Gui::g_framebuffer_width / 2, 200, currTheme.textColor, "你选择以下两个选项之一：", ALIGNED_CENTER);
+            Gui::drawTextAligned(font20, Gui::g_framebuffer_width / 2, 200, currTheme.textColor, "可选择以下两个选项之一：", ALIGNED_CENTER);
 
             const std::string restrictedModeReason = "限制模式原因：" + errorMessage;
             Gui::drawTextAligned(font20, Gui::g_framebuffer_width / 2, Gui::g_framebuffer_height - 150, currTheme.textColor, restrictedModeReason.c_str(), ALIGNED_CENTER);
