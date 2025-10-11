@@ -21,12 +21,12 @@ GuiOverrideKey::GuiOverrideKey() : Gui() {
     keySelectButton->adjacentButton[ADJ_LEFT] = 2;
     keySelectButton->drawAction = [&](Gui *gui, u16 x, u16 y, bool *isActivated) {
         if (m_inputBlocked)
-            gui->drawTextAligned(font20, x + 190, y + 100, currTheme.textColor, "Press any key...", ALIGNED_CENTER);
+            gui->drawTextAligned(font20, x + 190, y + 100, currTheme.textColor, "按任意键...", ALIGNED_CENTER);
         else if (m_override.key.key == 0)
-            gui->drawTextAligned(font24, x + 190, y + 100, currTheme.unselectedColor, "No key selected", ALIGNED_CENTER);
+            gui->drawTextAligned(font24, x + 190, y + 100, currTheme.unselectedColor, "未选择按键", ALIGNED_CENTER);
         else
             gui->drawTextAligned(fontHuge, x + 190, y + 136, currTheme.textColor, OverrideKey::KeyToUnicode(m_override.key.key), ALIGNED_CENTER);
-        gui->drawTextAligned(font14, x + 190, y + 185, currTheme.textColor, "Override key", ALIGNED_CENTER);
+        gui->drawTextAligned(font14, x + 190, y + 185, currTheme.textColor, "覆盖按键", ALIGNED_CENTER);
     };
     keySelectButton->inputAction = [&](u64 kdown, bool *isActivated) {
         if (*isActivated) {
@@ -62,8 +62,8 @@ GuiOverrideKey::GuiOverrideKey() : Gui() {
     comboPressedButton->adjacentButton[ADJ_DOWN] = g_keyType == OverrideKeyType::Any_App_Override ? 3 : -1;
     comboPressedButton->adjacentButton[ADJ_LEFT] = 2;
     comboPressedButton->drawAction = [&](Gui *gui, u16 x, u16 y, bool *isActivated) {
-        gui->drawTextAligned(font20, x + 20, y + 50, currTheme.textColor, "Key must be:", ALIGNED_LEFT);
-        gui->drawTextAligned(font20, x + 360, y + 50, currTheme.selectedColor, m_override.key.overrideByDefault ? "Unpressed" : "Pressed", ALIGNED_RIGHT);
+        gui->drawTextAligned(font20, x + 20, y + 50, currTheme.textColor, "按键必须:", ALIGNED_LEFT);
+        gui->drawTextAligned(font20, x + 360, y + 50, currTheme.selectedColor, m_override.key.overrideByDefault ? "不按下" : "按下", ALIGNED_RIGHT);
     };
     comboPressedButton->inputAction = [&](u32 kdown, bool *isActivated) {
         if (kdown & HidNpadButton_A) {
@@ -91,8 +91,8 @@ GuiOverrideKey::GuiOverrideKey() : Gui() {
             anyTitleIconButton->adjacentButton[ADJ_RIGHT] = 0;
             anyTitleIconButton->drawAction = [&](Gui *gui, u16 x, u16 y, bool *isActivated) {
                 gui->drawTextAligned(fontHuge, x + 150, y + 190, currTheme.textColor, "\uE135", ALIGNED_CENTER);
-                gui->drawTextAligned(font24, x, y - 60, currTheme.textColor, "Override when entering:", ALIGNED_LEFT);
-                gui->drawTextAligned(font24, x, y - 20, currTheme.textColor, "Any title", ALIGNED_LEFT);
+                gui->drawTextAligned(font24, x, y - 60, currTheme.textColor, "覆盖应用对象:", ALIGNED_LEFT);
+                gui->drawTextAligned(font24, x, y - 20, currTheme.textColor, "任意应用", ALIGNED_LEFT);
             };
             anyTitleIconButton->usableCondition = []() -> bool { return false; };
             add(anyTitleIconButton);
@@ -104,8 +104,8 @@ GuiOverrideKey::GuiOverrideKey() : Gui() {
             overrideEnabledButton->adjacentButton[ADJ_UP] = 1;
             overrideEnabledButton->adjacentButton[ADJ_LEFT] = 2;
             overrideEnabledButton->drawAction = [&](Gui *gui, u16 x, u16 y, bool *isActivated) {
-                gui->drawTextAligned(font20, x + 20, y + 50, currTheme.textColor, "Enabled", ALIGNED_LEFT);
-                gui->drawTextAligned(font20, x + 360, y + 50, m_overrideAnyApp ? currTheme.selectedColor : currTheme.unselectedColor, m_overrideAnyApp ? "On" : "Off", ALIGNED_RIGHT);
+                gui->drawTextAligned(font20, x + 20, y + 50, currTheme.textColor, "启用", ALIGNED_LEFT);
+                gui->drawTextAligned(font20, x + 360, y + 50, m_overrideAnyApp ? currTheme.selectedColor : currTheme.unselectedColor, m_overrideAnyApp ? "开启" : "关闭", ALIGNED_RIGHT);
             };
             overrideEnabledButton->inputAction = [&](u64 kdown, bool *isActivated) {
                 if (kdown & HidNpadButton_A) {
@@ -130,14 +130,14 @@ GuiOverrideKey::GuiOverrideKey() : Gui() {
             appIconButton->adjacentButton[ADJ_DOWN] = 1;
             appIconButton->adjacentButton[ADJ_RIGHT] = 0;
             appIconButton->drawAction = [&, title{DumpTitle(m_override.programID)}](Gui *gui, u16 x, u16 y, bool *isActivated) {
-                gui->drawTextAligned(font24, x, y - 60, currTheme.textColor, "Override when entering:", ALIGNED_LEFT);
+                gui->drawTextAligned(font24, x, y - 60, currTheme.textColor, "覆盖应用对象:", ALIGNED_LEFT);
                 if (title.get() != nullptr && title->application_id != 0) {
 
                     auto appletName = GetAppletName(title->application_id);
                     if (appletName == nullptr) {
                         appletName = title->name;
                     } else {
-                        gui->drawTextAligned(font20, Gui::g_framebuffer_width / 2, y + 350, currTheme.activatedColor, "Opening hbmenu through an applet may not leave enough memory for homebrew applications. \n It's recommended to open hbmenu from a game to gain full RAM access.", ALIGNED_CENTER);
+                        gui->drawTextAligned(font20, Gui::g_framebuffer_width / 2, y + 350, currTheme.activatedColor, "通过小程序模式打开HBmemu菜单可能无法为自制软件提供足够的内存。 \n 可按住R键点击任一游戏进入，打开HBmenu菜单的应用程序模式，获得完整的内存访问权限。", ALIGNED_CENTER);
                     }
 
                     gui->drawTextAligned(font24, x, y - 20, currTheme.textColor, appletName, ALIGNED_LEFT);
@@ -148,7 +148,7 @@ GuiOverrideKey::GuiOverrideKey() : Gui() {
                         gui->drawTextAligned(fontHuge, x + 150, y + 186, GetAppletColor(title->application_id), GetAppletIcon(title->application_id), ALIGNED_CENTER);
                 } else {
                     gui->drawTextAligned(fontHuge, x + 150, y + 186, currTheme.unselectedColor, "\uE06B", ALIGNED_CENTER);
-                    gui->drawTextAligned(font24, x + 150, y + 280, currTheme.unselectedColor, "No title selected", ALIGNED_CENTER);
+                    gui->drawTextAligned(font24, x + 150, y + 280, currTheme.unselectedColor, "未选择应用", ALIGNED_CENTER);
                 }
             };
             appIconButton->inputAction = [&](u64 kdown, bool *isActivated) {
@@ -175,8 +175,8 @@ void GuiOverrideKey::draw() {
     Gui::drawRectangle((u32)((Gui::g_framebuffer_width - 1220) / 2), 87, 1220, 1, currTheme.textColor);
     Gui::drawRectangle((u32)((Gui::g_framebuffer_width - 1220) / 2), Gui::g_framebuffer_height - 73, 1220, 1, currTheme.textColor);
     Gui::drawTextAligned(fontIcons, 70, 68, currTheme.textColor, "\uE130", ALIGNED_LEFT);
-    Gui::drawTextAligned(font24, 70, 58, currTheme.textColor, "        Application override settings", ALIGNED_LEFT);
-    Gui::drawTextAligned(font20, Gui::g_framebuffer_width - 50, Gui::g_framebuffer_height - 25, currTheme.textColor, "\uE0E1 Back     \uE0E0 OK", ALIGNED_RIGHT);
+    Gui::drawTextAligned(font24, 70, 58, currTheme.textColor, "        应用覆盖设置", ALIGNED_LEFT);
+    Gui::drawTextAligned(font20, Gui::g_framebuffer_width - 50, Gui::g_framebuffer_height - 25, currTheme.textColor, "\uE0E1 返回     \uE0E0 确定", ALIGNED_RIGHT);
 
     drawButtons();
     Gui::endDraw();

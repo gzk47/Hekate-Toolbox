@@ -90,7 +90,7 @@ GuiSysmodule::GuiSysmodule() : Gui() {
         sysmoduleButton->volume = {500, 80};
         sysmoduleButton->drawAction = [&](Gui *gui, u16 x, u16 y, bool *isActivated) {
             gui->drawTextAligned(font20, x + 37, y + 50, currTheme.textColor, sysmodule.second.name.c_str(), ALIGNED_LEFT);
-            gui->drawTextAligned(font20, x + 420, y + 50, this->m_runningSysmodules.find(sysmodule.first) != this->m_runningSysmodules.end() ? currTheme.selectedColor : Gui::makeColor(0xB8, 0xBB, 0xC2, 0xFF), this->m_runningSysmodules.find(sysmodule.first) != this->m_runningSysmodules.end() ? "On" : "Off", ALIGNED_LEFT);
+            gui->drawTextAligned(font20, x + 420, y + 50, this->m_runningSysmodules.find(sysmodule.first) != this->m_runningSysmodules.end() ? currTheme.selectedColor : Gui::makeColor(0xB8, 0xBB, 0xC2, 0xFF), this->m_runningSysmodules.find(sysmodule.first) != this->m_runningSysmodules.end() ? "开启" : "关闭", ALIGNED_LEFT);
         };
         sysmoduleButton->inputAction = [&](u32 kdown, bool *isActivated) {
             if (kdown & HidNpadButton_A) {
@@ -105,13 +105,13 @@ GuiSysmodule::GuiSysmodule() : Gui() {
                     if (!sysmodule.second.requiresReboot) {
                         pmshellTerminateProgram(tid);
                     } else {
-                        (new MessageBox("This sysmodule requires a reboot to fully work. \n Please restart your console in order use it.", MessageBox::OKAY))->show();
+                        (new MessageBox("此系统插件修改需要重启生效。\n 请重启你的switch以使用它。", MessageBox::OKAY))->show();
                     }
 
                     remove(path.str().c_str());
                 } else {
                     if (sysmodule.second.requiresReboot) {
-                        (new MessageBox("This sysmodule requires a reboot to fully work. \n Please restart your console in order use it.", MessageBox::OKAY))->show();
+                        (new MessageBox("此系统插件修改需要重启生效。\n 请重启你的switch以使用它。", MessageBox::OKAY))->show();
                         FILE *fptr = fopen(path.str().c_str(), "wb+");
                         if (fptr != nullptr) fclose(fptr);
                     } else {
@@ -175,14 +175,14 @@ void GuiSysmodule::draw() {
     Gui::drawRectangle((u32)((Gui::g_framebuffer_width - 1220) / 2), 87, 1220, 1, currTheme.textColor);
     Gui::drawRectangle((u32)((Gui::g_framebuffer_width - 1220) / 2), Gui::g_framebuffer_height - 73, 1220, 1, currTheme.textColor);
     Gui::drawTextAligned(fontIcons, 70, 68, currTheme.textColor, "\uE130", ALIGNED_LEFT);
-    Gui::drawTextAligned(font24, 70, 58, currTheme.textColor, "        Hekate Toolbox", ALIGNED_LEFT);
+    Gui::drawTextAligned(font24, 70, 58, currTheme.textColor, "        Hekate 工具箱", ALIGNED_LEFT);
 
-    Gui::drawTextAligned(font20, Gui::g_framebuffer_width - 50, Gui::g_framebuffer_height - 25, currTheme.textColor, "\uE0E1 Back     \uE0E0 OK", ALIGNED_RIGHT);
+    Gui::drawTextAligned(font20, Gui::g_framebuffer_width - 50, Gui::g_framebuffer_height - 25, currTheme.textColor, "\uE0E1 返回     \uE0E0 确定", ALIGNED_RIGHT);
 
     if (anyModulesPresent)
-        Gui::drawTextAligned(font20, Gui::g_framebuffer_width / 2, 150, currTheme.textColor, "Select the background services (sysmodules) that should be running. \n Because of memory restraints it may be not possible to start all services at once.", ALIGNED_CENTER);
+        Gui::drawTextAligned(font20, Gui::g_framebuffer_width / 2, 150, currTheme.textColor, "选择要运行的后台服务(系统插件)。\n 由于内存限制，可能无法同时启动所有服务。", ALIGNED_CENTER);
     else
-        Gui::drawTextAligned(font20, Gui::g_framebuffer_width / 2, 550, currTheme.textColor, "You currently don't have any supported sysmodules installed. To use this \n feature, please install any supported sysmodule as an NSP.", ALIGNED_CENTER);
+        Gui::drawTextAligned(font20, Gui::g_framebuffer_width / 2, 550, currTheme.textColor, "您目前未安装任何受支持的系统插件。\n 如需使用此功能，请安装受支持的系统插件(NSP格式)。", ALIGNED_CENTER);
 
     drawButtons();
     Gui::endDraw();

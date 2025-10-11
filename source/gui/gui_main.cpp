@@ -35,7 +35,7 @@ GuiMain::GuiMain() : Gui() {
     overrideKeysMenuButton->adjacentButton[ADJ_RIGHT] = 1;
     overrideKeysMenuButton->drawAction = [&](Gui *gui, u16 x, u16 y, bool *isActivated) {
         gui->drawTextAligned(fontHuge, x + 100, y + 100, currTheme.textColor, "...", ALIGNED_CENTER);
-        gui->drawTextAligned(font14, x + 100, y + 185, currTheme.textColor, "Change override keys", ALIGNED_CENTER);
+        gui->drawTextAligned(font14, x + 100, y + 185, currTheme.textColor, "设置HBmenu快捷键", ALIGNED_CENTER);
     };
     overrideKeysMenuButton->inputAction = [&](u64 kdown, bool *isActivated) {
         if (kdown & HidNpadButton_A)
@@ -50,7 +50,7 @@ GuiMain::GuiMain() : Gui() {
     autobootSelectorButton->adjacentButton[ADJ_DOWN] = 2;
     autobootSelectorButton->adjacentButton[ADJ_LEFT] = 0;
     autobootSelectorButton->drawAction = [&](Gui *gui, u16 x, u16 y, bool *isActivated) {
-        gui->drawTextAligned(font20, x + 37, y + 50, currTheme.textColor, "Hekate autoboot profile", ALIGNED_LEFT);
+        gui->drawTextAligned(font20, x + 37, y + 50, currTheme.textColor, "Hekate 引导至", ALIGNED_LEFT);
 
         std::string autoBootName = m_currAutoBootConfig.name;
 
@@ -68,7 +68,7 @@ GuiMain::GuiMain() : Gui() {
             for (auto const &autoBootEntry : m_autoBootConfigs)
                 autobootNames.push_back(autoBootEntry.name);
 
-            (new ListSelector("Hekate autoboot profile", "\uE0E1 Back     \uE0E0 OK", autobootNames, currAutoBootEntryIndex))
+            (new ListSelector("Hekate 引导至", "\uE0E1 返回     \uE0E0 确认", autobootNames, currAutoBootEntryIndex))
                 ->setInputAction([&](u32 k, u16 selectedItem) {
                     if (k & HidNpadButton_A) {
                         auto hekateIni = parseOrCreateFileFixed(HEKATE_INI);
@@ -103,7 +103,7 @@ GuiMain::GuiMain() : Gui() {
     backgroundServicesButton->adjacentButton[ADJ_RIGHT] = 3;
     backgroundServicesButton->drawAction = [&](Gui *gui, u16 x, u16 y, bool *isActivated) {
         gui->drawRectangled(x, y, 340, 80, currTheme.submenuButtonColor);
-        gui->drawTextAligned(font20, x + 37, y + 50, currTheme.textColor, "Background services", ALIGNED_LEFT);
+        gui->drawTextAligned(font20, x + 37, y + 50, currTheme.textColor, "后台服务", ALIGNED_LEFT);
     };
     backgroundServicesButton->inputAction = [&](u32 kdown, bool *isActivated) {
         if (kdown & HidNpadButton_A)
@@ -119,7 +119,7 @@ GuiMain::GuiMain() : Gui() {
     rebootButton->adjacentButton[ADJ_LEFT] = 2;
     rebootButton->drawAction = [&](Gui *gui, u16 x, u16 y, bool *isActivated) {
         gui->drawRectangled(x, y, 335, 80, currTheme.submenuButtonColor);
-        gui->drawTextAligned(font20, x + 55, y + 50, currTheme.textColor, "Reboot to Hekate", ALIGNED_LEFT);
+        gui->drawTextAligned(font20, x + 55, y + 50, currTheme.textColor, "重启到Hekate", ALIGNED_LEFT);
     };
     rebootButton->inputAction = [&](u32 kdown, bool *isActivated) {
         if (kdown & HidNpadButton_A) {
@@ -143,9 +143,9 @@ void GuiMain::draw() {
     Gui::drawRectangle((u32)((Gui::g_framebuffer_width - 1220) / 2), 87, 1220, 1, currTheme.textColor);
     Gui::drawRectangle((u32)((Gui::g_framebuffer_width - 1220) / 2), Gui::g_framebuffer_height - 73, 1220, 1, currTheme.textColor);
     Gui::drawTextAligned(fontIcons, 70, 68, currTheme.textColor, "\uE130", ALIGNED_LEFT);
-    Gui::drawTextAligned(font24, 70, 58, currTheme.textColor, "        Hekate Toolbox", ALIGNED_LEFT);
-    Gui::drawTextAligned(font20, Gui::g_framebuffer_width - 50, Gui::g_framebuffer_height - 25, currTheme.textColor, "\uE0E1 Back     \uE0E0 OK", ALIGNED_RIGHT);
-    Gui::drawTextAligned(font24, Gui::g_framebuffer_width / 2, Gui::g_framebuffer_height - 130, currTheme.textColor, "Press \uE044 to save and return back to the home menu", ALIGNED_CENTER);
+    Gui::drawTextAligned(font24, 70, 58, currTheme.textColor, "        Hekate 工具箱", ALIGNED_LEFT);
+    Gui::drawTextAligned(font20, Gui::g_framebuffer_width - 50, Gui::g_framebuffer_height - 25, currTheme.textColor, "\uE0E1 返回     \uE0E0 确认", ALIGNED_RIGHT);
+    Gui::drawTextAligned(font24, Gui::g_framebuffer_width / 2, Gui::g_framebuffer_height - 130, currTheme.textColor, "按 \uE044 保存并回到主页", ALIGNED_CENTER);
 
     drawButtons();
     Gui::endDraw();
