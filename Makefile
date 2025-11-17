@@ -32,7 +32,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 #---------------------------------------------------------------------------------
 VERSION_MAJOR := 4
 VERSION_MINOR := 0
-VERSION_MICRO := 4
+VERSION_MICRO := 5
 
 APP_TITLE	:=	Hekate Toolbox
 APP_AUTHOR	:=	WerWolv, cathery, gzk_47汉化
